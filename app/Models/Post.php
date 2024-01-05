@@ -11,7 +11,7 @@ class Post extends Model
 
 //    protected $fillable =['title','category_id','slug','body','excerpt'];
     protected $guarded = [];
-//    protected $with = ['category', 'author'];
+    protected $with = ['category', 'author'];
 
     public function category()
     {
@@ -21,5 +21,15 @@ class Post extends Model
     public function author()//auther_id
     {
         return $this->belongsTo(User::class, 'user_id');
+    }
+
+    public function scopeFilter($query, array $filters)
+    {
+        $query->when($filters['search'] ?? false, function ($query, $search) {
+            $query
+                ->where('title', 'like', '%' . $search . '%')
+                ->orwhere('body', 'like', '%' . $search . '%');
+        });
+
     }
 }
