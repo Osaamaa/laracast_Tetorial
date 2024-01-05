@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Category;
 use App\Models\Post;
 use Illuminate\Http\Request;
+use function Symfony\Component\String\s;
 
 class PostController extends Controller
 {
@@ -12,8 +13,9 @@ class PostController extends Controller
     {
 
         return view('posts', [
-            'posts' => Post::latest()->filter(request(['search']))->get(),
+            'posts' => Post::latest()->filter(request(['search','category']))->get(),
             'categories' => Category::all(),
+            'currentCategory'=>  Category::where('slug',request('category'))->first()
 
         ]);
     }
