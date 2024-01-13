@@ -20,7 +20,7 @@
                 @enderror
 
             </div>
-            <x-submit-button>post</x-submit-button>
+            <x-form.button>post</x-form.button>
         </form>
     </x-panel>
 @else
